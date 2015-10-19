@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="leJarModule" ng-csp>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+       <link rel="stylesheet" href="css/bootstrap.min.css">
+       <script src="js/jquery.min.js"></script>
+       <script src="js/angular.js"></script>
+		<script src="js/leJarModule.js"></script>
+    </head>
+    
+    <body>
+         <div class="container" style="width:400px;">
+        <div ng-controller="entriesController">
+            
+            
+            
+        
+       
+        <div id="balanceId">
+            <h3>Welcome {{name}}</h3>
+            <button class="btn btn-success" ng-click="generateRandom()">GET RANDOM</button>
+            <span class="label label-danger">{{errorMessage}}</span>
+            <span class="label label-info">{{message}}</span>
+                
+            <h4>Balance</h4>
+            <table class="table table-bordered" style="text-align:center;">
+                <thead>
+                    <tr>
+                        <th>Total Balance</th>
+                        <th>RD${{totalBalance.balance}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+            <table class="table table-bordered" >
+                <thead>
+                    <tr>
+                        <th colspan="2" style="text-align:center;">Today's balance</th>
+                    </tr>
+                    <tr>
+                        <th>Paid</th>
+                        <th>UnPaid</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>RD${{todayBalance.paid_balance}}</td>
+                        <td>RD${{todayBalance.unpaid_balance}}</td>
+                    </tr>
+                </tbody>
+            </table>
+                <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="2" style="text-align:center;">Today's personal balance</th>
+                    </tr>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Paid?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>RD${{todayPersonalBalance.todays_balance}}</td>
+                        <td>{{todayPersonalBalance.paid}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered" >
+                <thead>
+                    <tr>
+                        <th colspan="2" style="text-align:center;">Total personal balance</th>
+                    </tr>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Paid?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>RD${{totalPersonalBalance.todays_balance}}</td>
+                        <td>{{totalPersonalBalance.paid}}</td>
+                    </tr>
+                </tbody>
+            </table>
+             </div>
+            
+        
+        <div id="userSelection" class="" style="width:400px;">
+            <div class="row">
+            <div class="col-xs-12" style="text-align:center;">
+                It looks like you have not been identified. Who Are you?
+            </div>    
+            </div>
+            <div class="row" style="margin-top:5px;">
+                <div class="col-xs-12" style="text-align:center;">
+                <button class="btn btn-success" ng-click="saveUser()">Save</button>
+            </div>   
+            </div>
+            <div class="row" style="margin-top:5px;">
+            <div class="col-xs-12">
+                <select class="form-control" ng-model="currentUser" ng-options="user.first_name for user in users"/>
+            </div>    
+            </div>            
+        </div>
+       
+        </div>
+             </div>
+    </body>	 
+    
+</html>
