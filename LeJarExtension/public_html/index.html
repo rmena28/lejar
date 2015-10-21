@@ -22,7 +22,7 @@ and open the template in the editor.
         <div class="container" >
             <div id="hasAccess">
                 <div style="text-align: center;">
-                    <h5>Welcome {{name}}</h5>
+                    <h5>Welcome {{name}}</h5> 
                 </div>
                 <div class="row" style="font-size: 12px;font-weight: 500;">
                     <div class="col s12">
@@ -30,6 +30,8 @@ and open the template in the editor.
                             <li class="tab col s3"><a class="active blue-text" href="#dashboard">Dashboard</a></li>
                             <li class="tab col s3"><a class="blue-text" href="#random">Random</a></li>
                             <li class="tab col s3"><a class="blue-text" href="#history">My History</a></li>
+                            <li class="tab col s3"><a class="blue-text" href="#history">Approve</a></li>
+                            <li class="tab col s3"><a class="blue-text" href="#history">Maintenance</a></li>
                         </ul>
                     </div>
                 </div>
@@ -98,22 +100,26 @@ and open the template in the editor.
                 <div id="history">
                     History Here
                 </div>
+
+                <div>
+                    <a class="right" style="font-size: 12px;margin-bottom: 15px;" href="index.html" ng-click="logout()">LOGOUT</a>
+                </div>
             </div>
             <div id="hasNoAccess">
                 <div id="userSelection">
                     <div class="row">
-                        <div class="col-xs-12" style="text-align:center;">
-                            It looks like you have not been identified. Who Are you?
+                        <div class="col s12" style="text-align:center;font-si">
+                            <h5>It looks like you have not been identified. Who Are you?</h5>
                         </div>    
                     </div>
                     <div class="row" style="margin-top:5px;">
-                        <div class="col-xs-12" style="text-align:center;">
+                        <div class="col s12" style="text-align:center;">
                             <a href="#" class="btn btn-success" ng-click="saveUser()">Save</a>
                         </div>   
                     </div>
                     <div class="row" style="margin-top:5px;">
                         <div class="input-field col s12">
-                            <select  class="browser-default" ng-model="currentUser" ng-options="user.first_name + ' ' + user.last_name for user in users"/>
+                            <select style="border-color: 1px solid #ccc;"  class="browser-default" ng-model="currentUser" ng-options="user.first_name + ' ' + user.last_name for user in users"/>
                             <label>Choose who are you?</label>
                         </div>    
                     </div>    
