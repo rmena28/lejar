@@ -16,16 +16,21 @@ and open the template in the editor.
 
     <body ng-controller="entriesController">
         <div class="container" style="width:400px;padding: 10px;">
-            <ul class="nav nav-pills" role="tablist">
-                <li role="presentation" class="active"><a href="#">Home <span class="badge">42</span></a></li>
-                <li role="presentation"><a href="#">Profile</a></li>
-                <li role="presentation"><a href="#">Messages <span class="badge">3</span></a></li>
+            <ul id="menuId" class="nav nav-pills" role="tablist">
+                <li role="presentation" class="menuList randomClass active" ><a href="#" ng-click="selectMenu('randomClass','randomId')">Random</a></li>
+                <li role="presentation" class="menuList balanceClass "><a href="#" ng-click="selectMenu('balanceClass','balanceId')">Balance<span class="badge">{{totalBalance.balance}}</span></a></li>
+                <li id="logout" role="presentation"><a href="#" ng-click="logout()">Logout</a></li>
             </ul>
-            <div id="balanceId">
+            
+            <div id="randomId" class="panelClass">
                 <h3>Welcome {{name}}</h3>
                 <button class="btn btn-success" ng-click="generateRandom()">GET RANDOM</button>
                 <span class="label label-danger">{{errorMessage}}</span>
                 <span class="label label-info">{{message}}</span>
+            </div>
+            
+            <div id="balanceId" class="panelClass">
+                
                 <table class="table table-bordered" style="margin-top: 10px;">
                     <thead>
                         <tr>

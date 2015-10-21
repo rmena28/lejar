@@ -3,7 +3,17 @@ var rootPath = 'http://le-jar-service.herokuapp.com';
 var userModule = angular.module('leJarModule', []);
 
 var entriesController = userModule.controller('entriesController', function ($scope, $http) {
-    var refrestBalance = function () {
+    $scope.logout = function () {
+        localStorage.removeItem('userId');
+        localStorage.removeItem('name');
+        location.reload();
+    }
+    $scope.selectMenu = function (selected, panelId) {
+        activeMenu(selected);
+        hideAllPanels();
+        showPanel(panelId);
+    }
+    var refreshBalance = function () {
         $http.get(rootPath + '/balance/total')
                 .then(setTotalBalance);
         $http.get(rootPath + '/balance/todays')
@@ -22,7 +32,8 @@ var entriesController = userModule.controller('entriesController', function ($sc
                 .then(findAllUsers);
     } else {
         showBalance();
-        refrestBalance();
+        refreshBalance();
+        $scope.selectMenu('randomClass','randomId');
         $scope.name = localStorage.name;
     }
 
@@ -40,7 +51,7 @@ var entriesController = userModule.controller('entriesController', function ($sc
         console.log('calling script');
         $http.get(rootPath + '/entries/add/byUserId/' + localStorage.userId)
                 .then(checkResponse);
-        refrestBalance();
+        refreshBalance();
     }
 
     var setTotalBalance = function (response) {
@@ -80,28 +91,46 @@ var entriesController = userModule.controller('entriesController', function ($sc
         }
     }
 
-    refrestBalance();
+    refreshBalance();
 
     $scope.saveUser = function () {
         localStorage.userId = $scope.currentUser._id;
         localStorage.name = $scope.currentUser.first_name + ' ' + $scope.currentUser.last_name;
         $scope.name = localStorage.name;
         showBalance();
-
-
     }
+
+
 
 
 
 });
 
 
+function activeMenu(selectedMenuClass) {
+    $('.menuList').removeClass('active');
+    $('.' + selectedMenuClass).addClass('active');
+
+}
+
+function hideAllPanels() {
+    $('.panelClass').hide();
+}
+
+function showPanel(id) {
+    $('#' + id).show();
+}
+
 function showBalance() {
+    $('#menuId').show();
     $('#balanceId').show();
+    $('#randomId').show();
     $('#userSelection').hide();
 }
 
 function hideBalance() {
+    $('#menuId').hide();
     $('#balanceId').hide();
+    $('#randomId').hide();
     $('#userSelection').show();
 }
