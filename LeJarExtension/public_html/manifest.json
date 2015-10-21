@@ -8,5 +8,8 @@
         "default_title": "",
         "default_icon": "money.png",
         "default_popup": "index.html"
-    }
+    },
+    "web_accessible_resources": [
+        "font/roboto/*.*"
+    ]
 }

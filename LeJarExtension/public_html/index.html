@@ -8,76 +8,117 @@ and open the template in the editor.
     <head>
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="css/materialize.css"  media="screen,projection">
         <script src="js/jquery.min.js"></script>
         <script src="js/angular.js"></script>
+        <script src="js/materialize.js"></script>
         <script src="js/leJarModule.js"></script>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
 
     <body ng-controller="entriesController">
-        <div class="container" style="width:400px;padding: 10px;">
-            <ul id="menuId" class="nav nav-pills" role="tablist">
-                <li role="presentation" class="menuList randomClass active" ><a href="#" ng-click="selectMenu('randomClass','randomId')">Random</a></li>
-                <li role="presentation" class="menuList balanceClass "><a href="#" ng-click="selectMenu('balanceClass','balanceId')">Balance<span class="badge">{{totalBalance.balance}}</span></a></li>
-                <li id="logout" role="presentation"><a href="#" ng-click="logout()">Logout</a></li>
-            </ul>
-            
-            <div id="randomId" class="panelClass">
-                <h3>Welcome {{name}}</h3>
-                <button class="btn btn-success" ng-click="generateRandom()">GET RANDOM</button>
-                <span class="label label-danger">{{errorMessage}}</span>
-                <span class="label label-info">{{message}}</span>
-            </div>
-            
-            <div id="balanceId" class="panelClass">
-                
-                <table class="table table-bordered" style="margin-top: 10px;">
-                    <thead>
-                        <tr>
-                            <th colspan="2" style="text-align:center;">Balance</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>Total Balance</th>
-                            <th>RD${{totalBalance.balance}}</th>
-                        </tr>
-                        <tr>
-                            <td>Today's balance</td>
-                            <td>RD${{todayBalance.paid_balance}}<span  id="todayTotalBalance" style="color:red;"> (RD${{evaluateAmount(todayBalance.unpaid_balance)}})</span></td>
-                        </tr>
-                        <tr>
-                            <td>Today's personal balance</td>
-                            <td>RD${{todayPersonalBalance.todays_balance}} <span id="todayPayment" style="color:red;">({{evaluatePayment(todayPersonalBalance.paid)}})</span></td>
-                        </tr>
-                        <tr>
-                            <td>Total personal balance</td>
-                            <td>RD${{totalPersonalBalance.todays_balance}} <span id="todayPayment" style="color:red;">({{evaluatePayment(totalPersonalBalance.paid)}})</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="container" >
+            <div id="hasAccess">
+                <div style="text-align: center;">
+                    <h5>Welcome {{name}}</h5>
+                </div>
+                <div class="row" style="font-size: 12px;font-weight: 500;">
+                    <div class="col s12">
+                        <ul class="tabs blue-text">
+                            <li class="tab col s3"><a class="active blue-text" href="#dashboard">Dashboard</a></li>
+                            <li class="tab col s3"><a class="blue-text" href="#random">Random</a></li>
+                            <li class="tab col s3"><a class="blue-text" href="#history">My History</a></li>
+                        </ul>
+                    </div>
+                </div>
 
+                <div id="random">
+                    <div class="card-panel" style="text-align: center;">
+                        <span class="blue-text text-darken-2">
+                            <a href="#" class="waves-effect waves-light btn-large"  ng-click="generateRandom()" >
+                                <i class="material-icons left">send</i>
+                                Generate Random
+                            </a>
+                        </span>
+                    </div>
+                </div>
 
-            <div id="userSelection">
-                <div class="row">
-                    <div class="col-xs-12" style="text-align:center;">
-                        It looks like you have not been identified. Who Are you?
+                <div id="dashboard">
+                    <div style="text-align: center;">
+                        <h5>Balance</h5>
+                    </div>
+                    <div class="card-panel" style="text-align: center;font-size: 12px;font-weight: bold">
+                        <table class="bordered">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" style="text-align:center;"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Total Balance</td>
+                                    <td>
+                                        <span class="green-text">
+                                            RD${{dashboard.total_balance_paid}}
+                                        </span>
+                                        <span class="red-text">
+                                            (RD${{dashboard.total_balance_unpaid}})
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Today's Personal Balance</td>
+                                    <td>
+                                        <span class="green-text">
+                                            RD${{dashboard.todays_personal_balance_paid}}
+                                        </span>
+                                        <span class="red-text">
+                                            (RD${{dashboard.todays_personal_balance_unpaid}})
+                                        </span>   
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Total Personal Balance</td>
+                                    <td>
+                                        <span class="green-text">
+                                            RD${{dashboard.total_personal_balance_paid}}
+                                        </span>
+                                        <span class="red-text">
+                                            (RD${{dashboard.total_personal_balance_unpaid}})
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="history">
+                    History Here
+                </div>
+            </div>
+            <div id="hasNoAccess">
+                <div id="userSelection">
+                    <div class="row">
+                        <div class="col-xs-12" style="text-align:center;">
+                            It looks like you have not been identified. Who Are you?
+                        </div>    
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-xs-12" style="text-align:center;">
+                            <a href="#" class="btn btn-success" ng-click="saveUser()">Save</a>
+                        </div>   
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="input-field col s12">
+                            <select  class="browser-default" ng-model="currentUser" ng-options="user.first_name + ' ' + user.last_name for user in users"/>
+                            <label>Choose who are you?</label>
+                        </div>    
                     </div>    
                 </div>
-                <div class="row" style="margin-top:5px;">
-                    <div class="col-xs-12" style="text-align:center;">
-                        <a href="#" class="btn btn-success" ng-click="saveUser()">Save</a>
-                    </div>   
-                </div>
-                <div class="row" style="margin-top:5px;">
-                    <div class="col-xs-12">
-                        <select style="text-align: center;" class="form-control" ng-model="currentUser" ng-options="user.first_name + ' ' + user.last_name for user in users"/>
-                    </div>    
-                </div>    
-
             </div>
-
         </div>
     </body>	 
 
