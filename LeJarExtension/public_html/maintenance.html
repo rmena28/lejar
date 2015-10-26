@@ -1,0 +1,42 @@
+
+<ul class="collapsible" data-collapsible="accordion" ng-init="startAccordion();">
+    <li>
+        <div class="collapsible-header grey lighten-4"><i class="material-icons">not_interested</i>Cancel</div>
+        <div class="collapsible-body">
+            <div class="container">
+                <table class="bordered centered">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="entry in entries" ng-if="entry.paid === true && entry.type === 'normal'">
+                            <td>{{entry.entry_date| date:'yyyy-MM-dd'}}</td>
+                            <td>RD${{entry.amount}}</td>
+                            <td>
+                                <a href="#" class="waves-effect waves-light btn red" style="padding: 1px 10px;"  ng-click="generateRandom()" >
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="collapsible-header"><i class="material-icons">perm_identity</i>Users</div>
+        <div class="collapsible-body"><p>Other Maintenance Option</p></div>
+    </li>
+    <li>
+        <div class="collapsible-header"><i class="material-icons">trending_up</i>Amounts</div>
+        <div class="collapsible-body"><p>Another Maintenance Option</p></div>
+    </li>
+    <li>
+        <div class="collapsible-header"><i class="material-icons">swap_vert</i>Mode</div>
+        <div class="collapsible-body"><p>Another Maintenance Option</p></div>
+    </li>
+</ul>

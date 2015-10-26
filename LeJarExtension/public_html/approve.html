@@ -1,0 +1,25 @@
+
+<div class="card-panel grey lighten-4">
+    <table class="centered">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="entry in entries" ng-if="!entry.paid && entry.type === 'normal'">
+                <td>{{entry.user}}</td>
+                <td>{{entry.entry_date| date:'yyyy-MM-dd'}}</td>
+                <td>RD${{entry.amount}}</td>
+                <td>
+                    <a href="#" class="waves-effect waves-light btn blue" style="padding: 1px 10px;" ng-click="approveEntry(entry)" >
+                        <i class="material-icons">done</i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

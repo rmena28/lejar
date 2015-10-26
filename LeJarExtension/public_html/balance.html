@@ -1,0 +1,59 @@
+
+<div class="card-panel grey lighten-4" style="text-align: center;font-size: 12px;">
+    <table class="bordered">
+        <thead>
+            <tr>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Paid
+                </th>
+                <th>
+                    Unpaid
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Total Balance</td>
+                <td>
+                    <span class="green-text">
+                        RD${{dashboard.total_balance_paid}}
+                    </span>
+                </td>
+                <td> 
+                    <span class="red-text">
+                        (RD${{dashboard.total_balance_unpaid}})
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>Today's Personal Balance</td>
+                <td>
+                    <span class="green-text">
+                        RD${{dashboard.todays_personal_balance_paid}}
+                    </span>
+                </td>
+                <td>
+                    <span class="red-text">
+                        (RD${{dashboard.todays_personal_balance_unpaid}})
+                    </span>   
+                </td>
+            </tr>
+            <tr>
+                <td>Total Personal Balance</td>
+                <td>
+                    <span class="green-text">
+                        RD${{dashboard.total_personal_balance_paid}}
+                    </span>
+                </td>
+                <td>  
+                    <span class="red-text">
+                        (RD${{dashboard.total_personal_balance_unpaid}})
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

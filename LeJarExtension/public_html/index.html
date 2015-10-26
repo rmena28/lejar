@@ -10,99 +10,56 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="css/materialize.css"  media="screen,projection">
+        <style type="text/css">
+            .card-panel{
+                padding: 5px 20px 20px 20px;
+            }
+        </style>
         <script src="js/jquery.min.js"></script>
         <script src="js/angular.js"></script>
         <script src="js/materialize.js"></script>
+        <script src="js/lejar-utils.js"></script>
         <script src="js/leJarModule.js"></script>
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
 
     <body ng-controller="entriesController">
+
         <div class="container" >
             <div id="hasAccess">
-                <div style="text-align: center;">
-                    <h5>Welcome {{name}}</h5> 
-                </div>
                 <div class="row" style="font-size: 12px;font-weight: 500;">
                     <div class="col s12">
                         <ul class="tabs blue-text">
-                            <li class="tab col s3"><a class="active blue-text" href="#dashboard">Dashboard</a></li>
-                            <li class="tab col s3"><a class="blue-text" href="#random">Random</a></li>
-                            <li class="tab col s3"><a class="blue-text" href="#history">My History</a></li>
-                            <li class="tab col s3"><a class="blue-text" href="#history">Approve</a></li>
-                            <li class="tab col s3"><a class="blue-text" href="#history">Maintenance</a></li>
+                            <li class="tab col s3"><a class="blue-text" href="#balance" ng-click="selectViewMode('balance');loadDashboardInfo()">Balance</a></li>
+                            <li class="tab col s3"><a class="active blue-text" href="#random" ng-click="selectViewMode('random')">Random</a></li>
+                            <li class="tab col s3"><a id="historyMenuId" class="blue-text" href="#history" ng-click="findEntriesByUser();selectViewMode('history')">My History</a></li>
+                            <li ng-if="is_user_approver === 'true'" class="tab col s3"><a  class="blue-text" href="#approve" ng-click="findAllEntries();selectViewMode('approve')">Approve</a></li>
+                            <li ng-if="is_user_maintenance === 'true'" class="tab col s3"><a  class="blue-text" href="#maintenance" ng-click="selectViewMode('maintenance')">Maintenance</a></li>
                         </ul>
                     </div>
                 </div>
-
-                <div id="random">
-                    <div class="card-panel" style="text-align: center;">
-                        <span class="blue-text text-darken-2">
-                            <a href="#" class="waves-effect waves-light btn-large"  ng-click="generateRandom()" >
-                                <i class="material-icons left">send</i>
-                                Generate Random
-                            </a>
-                        </span>
-                    </div>
+                <div id="balance"  ng-if="viewMode === 'balance'"> 
+                    <div ng-include="'balance.html'"></div>
+                </div>
+                <div id="random" style="text-align: center;" ng-if="viewMode === 'random'">
+                    <div ng-include="'random.html'" ></div>
+                </div>
+                <div id="history" ng-if="viewMode === 'history'"> 
+                    <div ng-include="'history.html'"></div>
                 </div>
 
-                <div id="dashboard">
-                    <div style="text-align: center;">
-                        <h5>Balance</h5>
-                    </div>
-                    <div class="card-panel" style="text-align: center;font-size: 12px;font-weight: bold">
-                        <table class="bordered">
-                            <thead>
-                                <tr>
-                                    <th colspan="2" style="text-align:center;"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Total Balance</td>
-                                    <td>
-                                        <span class="green-text">
-                                            RD${{dashboard.total_balance_paid}}
-                                        </span>
-                                        <span class="red-text">
-                                            (RD${{dashboard.total_balance_unpaid}})
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Today's Personal Balance</td>
-                                    <td>
-                                        <span class="green-text">
-                                            RD${{dashboard.todays_personal_balance_paid}}
-                                        </span>
-                                        <span class="red-text">
-                                            (RD${{dashboard.todays_personal_balance_unpaid}})
-                                        </span>   
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Total Personal Balance</td>
-                                    <td>
-                                        <span class="green-text">
-                                            RD${{dashboard.total_personal_balance_paid}}
-                                        </span>
-                                        <span class="red-text">
-                                            (RD${{dashboard.total_personal_balance_unpaid}})
-                                        </span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div id="approve"  ng-if="viewMode === 'approve'"> 
+                    <div ng-include="'approve.html'"></div>
                 </div>
 
-                <div id="history">
-                    History Here
+                <div id="maintenance" ng-if="viewMode === 'maintenance'">
+                    <div ng-include="'maintenance.html'"></div>
                 </div>
 
                 <div>
-                    <a class="right" style="font-size: 12px;margin-bottom: 15px;" href="index.html" ng-click="logout()">LOGOUT</a>
+                    <a class="" href="#" style="font-size: 12px;" ng-click="clickOnElement('historyMenuId');selectViewMode('history');findEntriesByUser()">{{name}}</a>
+                    <a class="right" style="font-size: 12px;margin-bottom: 15px;" href="index.html" ng-click="logout()">Logout</a>
                 </div>
             </div>
             <div id="hasNoAccess">
@@ -119,13 +76,11 @@ and open the template in the editor.
                     </div>
                     <div class="row" style="margin-top:5px;">
                         <div class="input-field col s12">
-                            <select style="border-color: 1px solid #ccc;"  class="browser-default" ng-model="currentUser" ng-options="user.first_name + ' ' + user.last_name for user in users"/>
-                            <label>Choose who are you?</label>
+                            <select style="border-color:1px solid #ccc;"  class="browser-default" ng-model="currentUser" ng-options="user.first_name+' '+user.last_name for user in users"></select>
                         </div>    
                     </div>    
                 </div>
             </div>
         </div>
     </body>	 
-
 </html>
